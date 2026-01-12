@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج تمارين أسبوعي 💪</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pink-50: #fdf2f8;
+            --pink-100: #fce7f3;
+            --pink-200: #fbcfe8;
+            --pink-300: #f9a8d4;
+            --pink-400: #f472b6;
+            --pink-500: #ec4899;
+            --pink-600: #db2777;
+            --pink-700: #be185d;
+            --pink-800: #9d174d;
+            --pink-900: #831843;
+            --rose-gold: #b76e79;
+            --cream: #fff8f0;
+            --bg-primary: var(--pink-50);
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border-color: var(--pink-200);
+            --shadow-color: rgba(236, 72, 153, 0.15);
+            --gradient-start: var(--pink-400);
+            --gradient-end: var(--pink-600);
+        }
+
+        .dark {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+            --shadow-color: rgba(236, 72, 153, 0.25);
+            --gradient-start: var(--pink-500);
+            --gradient-end: var(--pink-700);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(244, 114, 182, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(219, 39, 119, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(251, 207, 232, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .dark body::before {
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(190, 24, 93, 0.08) 0%, transparent 50%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .header-icons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            opacity: 0.1;
+            color: white;
+        }
+
+        .header-icons.left { left: 2rem; }
+        .header-icons.right { right: 2rem; }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border-bottom: 2px solid var(--pink-200);
+        }
+
+        .dark .nav-container {
+            border-bottom-color: var(--pink-700);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--pink-300) transparent;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-tabs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .nav-tabs::-webkit-scrollbar-thumb {
+            background: var(--pink-300);
+            border-radius: 3px;
+        }
+
+        .nav-tab {
+            flex-shrink: 0;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tab:hover {
+            background: var(--pink-100);
+            color: var(--pink-700);
+        }
+
+        .dark .nav-tab:hover {
+            background: var(--pink-900);
+            color: var(--pink-300);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transform: scale(1.05);
+        }
+
+        .nav-tab .day-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab .day-status.completed {
+            background: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .nav-tab .day-status.in-progress {
+            background: #f59e0b;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .progress-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--pink-600);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark .progress-title {
+            color: var(--pink-400);
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, var(--pink-100), var(--pink-50));
+            border-radius: 15px;
+            min-width: 100px;
+        }
+
+        .dark .stat-item {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(190, 24, 93, 0.1));
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--pink-600);
+        }
+
+        .dark .stat-number {
+            color: var(--pink-400);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .progress-bar-container {
+            background: var(--pink-100);
+            border-radius: 50px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .dark .progress-bar-container {
+            background: rgba(236, 72, 153, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Day Content */
+        .day-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .day-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .day-subtitle {
+            opacity: 0.9;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .day-complete-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .day-complete-btn:hover {
+            background: white;
+            color: var(--pink-600);
+        }
+
+        .day-complete-btn.completed {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        /* Exercise Cards */
+        .exercises-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .exercise-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .exercise-card:nth-child(1) { animation-delay: 0.1s; }
+        .exercise-card:nth-child(2) { animation-delay: 0.2s; }
+        .exercise-card:nth-child(3) { animation-delay: 0.3s; }
+        .exercise-card:nth-child(4) { animation-delay: 0.4s; }
+        .exercise-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px var(--shadow-color);
+        }
+
+        .exercise-card.selected {
+            border: 3px solid var(--pink-500);
+        }
+
+        .exercise-card.done {
+            opacity: 0.7;
+            border: 3px solid #10b981;
+        }
+
+        .exercise-header {
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--pink-50), transparent);
+        }
+
+        .dark .exercise-header {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent);
+        }
+
+        .exercise-checkbox {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid var(--pink-400);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .exercise-checkbox:hover {
+            background: var(--pink-100);
+        }
+
+        .exercise-checkbox.checked {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-color: var(--pink-500);
+        }
+
+        .exercise-checkbox i {
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .exercise-checkbox.checked i {
+            opacity: 1;
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .exercise-name-en {
+            font-size: 0.9rem;
+            color: var(--pink-500);
+            font-weight: 500;
+        }
+
+        .exercise-sets {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .exercise-body {
+            padding: 1.25rem;
+        }
+
+        .exercise-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: var(--pink-100);
+            position: relative;
+        }
+
+        .exercise-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--pink-100), var(--pink-200));
+            color: var(--pink-600);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dark .video-placeholder {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(190, 24, 93, 0.3));
+            color: var(--pink-400);
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, var(--pink-200), var(--pink-300));
+        }
+
+        .video-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .exercise-tips {
+            background: linear-gradient(135deg, var(--pink-50), var(--pink-100));
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border-right: 4px solid var(--pink-400);
+        }
+
+        .dark .exercise-tips {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(190, 24, 93, 0.15));
+        }
+
+        .exercise-tips-title {
+            font-weight: 700;
+            color: var(--pink-600);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark .exercise-tips-title {
+            color: var(--pink-400);
+        }
+
+        .refresh-btn {
+            background: var(--pink-100);
+            border: none;
+            color: var(--pink-600);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .dark .refresh-btn {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--pink-400);
+        }
+
+        .refresh-btn:hover {
+            background: var(--pink-200);
+            transform: scale(1.05);
+        }
+
+        .refresh-btn i {
+            transition: transform 0.5s ease;
+        }
+
+        .refresh-btn:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Rest Day Styles */
+        .rest-day-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .rest-day-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .rest-day-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pink-600);
+            margin-bottom: 1rem;
+        }
+
+        .dark .rest-day-title {
+            color: var(--pink-400);
+        }
+
+        .rest-day-tips {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        .rest-tip {
+            background: linear-gradient(135deg, var(--pink-50), var(--pink-100));
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dark .rest-tip {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(190, 24, 93, 0.15));
+        }
+
+        .rest-tip i {
+            font-size: 1.5rem;
+            color: var(--pink-500);
+        }
+
+        /* Weekly Table */
+        .weekly-table-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--pink-600);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark .table-title {
+            color: var(--pink-400);
+        }
+
+        .weekly-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .weekly-table th,
+        .weekly-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .weekly-table th {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            font-weight: 600;
+        }
+
+        .weekly-table tr:nth-child(even) {
+            background: var(--pink-50);
+        }
+
+        .dark .weekly-table tr:nth-child(even) {
+            background: rgba(236, 72, 153, 0.05);
+        }
+
+        .table-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .table-status.completed {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .table-status.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .table-status.not-started {
+            background: var(--pink-100);
+            color: var(--pink-600);
+        }
+
+        .dark .table-status.not-started {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--pink-400);
+        }
+
+        /* Rules Section */
+        .rules-section {
+            background: linear-gradient(135deg, var(--pink-100), var(--pink-50));
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-right: 5px solid var(--pink-500);
+        }
+
+        .dark .rules-section {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(190, 24, 93, 0.1));
+        }
+
+        .rules-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--pink-600);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark .rules-title {
+            color: var(--pink-400);
+        }
+
+        .rules-list {
+            list-style: none;
+        }
+
+        .rules-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .rules-list li i {
+            color: var(--pink-500);
+            margin-top: 0.25rem;
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem auto 0;
+        }
+
+        .reset-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+        }
+
+        .modal-btn.cancel {
+            background: var(--pink-100);
+            color: var(--pink-600);
+        }
+
+        .dark .modal-btn.cancel {
+            background: rgba(236, 72, 153, 0.2);
+            color: var(--pink-400);
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-icons {
+                display: none;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .progress-stats {
+                justify-content: center;
+            }
+
+            .stat-item {
+                min-width: 80px;
+                padding: 0.5rem 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.4rem;
+            }
+
+            .day-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .exercise-header {
+                flex-wrap: wrap;
+            }
+
+            .exercise-sets {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.5rem;
+            }
+
+            .weekly-table {
+                font-size: 0.85rem;
+            }
+
+            .weekly-table th,
+            .weekly-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        /* Celebration Animation */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--pink-500);
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <span class="header-icons left"><i class="fas fa-dumbbell"></i></span>
+        <div>
+            <h1>💪 برنامج تمارين أسبوعي</h1>
+            <p>3 أيام مؤخرة + صدر + بطن | دمبل واحد + وزن الجسم</p>
+        </div>
+        <span class="header-icons right"><i class="fas fa-fire"></i></span>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-tabs" id="navTabs">
+            <!-- Generated by JS -->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Progress Section -->
+        <section class="progress-section">
+            <div class="progress-header">
+                <h2 class="progress-title">
+                    <i class="fas fa-chart-line"></i>
+                    تقدمك هذا الأسبوع
+                </h2>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="completedDays">0</div>
+                        <div class="stat-label">أيام مكتملة</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="completedExercises">0</div>
+                        <div class="stat-label">تمارين منجزة</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="weekProgress">0%</div>
+                        <div class="stat-label">نسبة الإنجاز</div>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="rules-section">
+            <h3 class="rules-title">
+                <i class="fas fa-lightbulb"></i>
+                قواعد عامة مهمة
+            </h3>
+            <ul class="rules-list">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>أكثر التمارين: 3 مجموعات × 10–15 عدة، مع راحة 60–90 ثانية بين المجموعات</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>لو حسيتي التمرين سهل، خليه 4 مجموعات أو زيدي العدات حتى تحسي آخر 2–3 عدات صعبات</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>ركزي على الإحساس بالعضلة المستهدفة أثناء التمرين</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Day Contents -->
+        <div id="dayContents">
+            <!-- Generated by JS -->
+        </div>
+
+        <!-- Weekly Table -->
+        <section class="weekly-table-section">
+            <h3 class="table-title">
+                <i class="fas fa-calendar-alt"></i>
+                جدول الأسبوع
+            </h3>
+            <div style="overflow-x: auto;">
+                <table class="weekly-table">
+                    <thead>
+                        <tr>
+                            <th>اليوم</th>
+                            <th>التركيز</th>
+                            <th>عدد التمارين</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weeklyTableBody">
+                        <!-- Generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <button class="reset-btn" onclick="showResetModal()">
+            <i class="fas fa-redo"></i>
+            إعادة تعيين التقدم
+        </button>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-icon" id="modalIcon">🎉</div>
+            <h3 class="modal-title" id="modalTitle">عنوان</h3>
+            <p class="modal-text" id="modalText">نص</p>
+            <div class="modal-buttons" id="modalButtons">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Workout Data
+        const workoutData = [
+            {
+                id: 1,
+                name: 'اليوم 1',
+                title: 'مؤخرة + رجلين (قوي)',
+                emoji: '🍑',
+                type: 'workout',
+                exercises: [
+                    {
+                        id: 'ex1-1',
+                        nameAr: 'سكوات بالدمبل',
+                        nameEn: 'Goblet Squat',
+                        sets: '3-4 × 10-15',
+                        videoId: 'MxsFDhcyFyE',
+                        description: 'أمسكي الدمبل أمام صدرك، انزلي ببطء مع إبقاء الظهر مستقيم والركب للخارج، ثم اصعدي مع عصر المؤخرة.',
+                        tips: 'ركزي على إبقاء الوزن على الكعبين وعصر المؤخرة عند الصعود.'
+                    },
+                    {
+                        id: 'ex1-2',
+                        nameAr: 'لانجز خلفي بالدمبل',
+                        nameEn: 'Reverse Lunges',
+                        sets: '3-4 × 10-15 لكل رجل',
+                        videoId: 'xrPteyQLGAo',
+                        description: 'قفي مستقيمة وأمسكي الدمبل، اخطي للخلف بإحدى الرجلين وانزلي حتى الركبة تقترب من الأرض.',
+                        tips: 'حافظي على الجذع مستقيم ولا تميلي للأمام.'
+                    },
+                    {
+                        id: 'ex1-3',
+                        nameAr: 'هيب ثرست بالدمبل',
+                        nameEn: 'Hip Thrust / Glute Bridge',
+                        sets: '3-4 × 10-15',
+                        videoId: 'SEdqd1n0cvg',
+                        description: 'استلقي على ظهرك مع ثني الركب، ضعي الدمبل على الحوض، وارفعي الورك للأعلى مع عصر المؤخرة.',
+                        tips: 'اثبتي لثانية في الأعلى واعصري المؤخرة بقوة.'
+                    },
+                    {
+                        id: 'ex1-4',
+                        nameAr: 'رومانيان ديدليفت',
+                        nameEn: 'Romanian Deadlift',
+                        sets: '3-4 × 10-15',
+                        videoId: 'hCDzSR6bW10',
+                        description: 'قفي مستقيمة وأمسكي الدمبل، انحني للأمام من الورك مع إبقاء الظهر مستقيم وركب منحنية قليلاً.',
+                        tips: 'يجب أ�� تحسي بشد في عضلات الفخذ الخلفية.'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: 'اليوم 2',
+                title: 'صدر + أكتاف + ظهر + ذراعين',
+                emoji: '💪',
+                type: 'workout',
+                exercises: [
+                    {
+                        id: 'ex2-1',
+                        nameAr: 'ضغط (بوش أب)',
+                        nameEn: 'Push-ups',
+                        sets: '3 × 8-12',
+                        videoId: 'IODxDxX7oi4',
+                        description: 'على الأرض أو على الركب للمبتدئات، انزلي بصدرك نحو الأرض ثم ادفعي للأعلى.',
+                        tips: 'حافظي على جسمك في خط مستقيم من الرأس للقدمين.'
+                    },
+                    {
+                        id: 'ex2-2',
+                        nameAr: 'ضغط صدر على الأرض',
+                        nameEn: 'Dumbbell Floor Press',
+                        sets: '3 × 8-12',
+                        videoId: 'uUGDRwge4F8',
+                        description: 'استلقي على الأرض مع ثني الركب، أمسكي الدمبل وادفعي للأعلى ثم أنزلي ببطء.',
+                        tips: 'لا تدعي المرفق ينزل تحت مستوى الأرض.'
+                    },
+                    {
+                        id: 'ex2-3',
+                        nameAr: 'ضغط كتف واقفة',
+                        nameEn: 'Single-arm Shoulder Press',
+                        sets: '3 × 8-12 لكل يد',
+                        videoId: 'qEwKCR5JCog',
+                        description: 'قفي مستقيمة، أمسكي الدمبل بيد واحدة عند الكتف وادفعي للأعلى.',
+                        tips: 'شغلي عضلات البطن للثبات.'
+                    },
+                    {
+                        id: 'ex2-4',
+                        nameAr: 'سحب ظهر بيد واحدة',
+                        nameEn: 'One-arm Dumbbell Row',
+                        sets: '3 × 8-12 لكل يد',
+                        videoId: 'pYcpY20QaE8',
+                        description: 'انحني للأمام مع إسناد يد على ركبة أو كرسي، اسحبي الدمبل للخلف.',
+                        tips: 'اسحبي المرفق للخلف وليس للأعلى.'
+                    },
+                    {
+                        id: 'ex2-5',
+                        nameAr: 'ثني الكوع / تمديد خلف الرأس',
+                        nameEn: 'Biceps Curl / Triceps Extension',
+                        sets: '3 × 8-12',
+                        videoId: 'ykJmrZ5v0Oo',
+                        description: 'للبايسبس: ثني الكوع لرفع الدمبل. للترايسبس: أمسكي الدمبل خلف الرأس ومدي للأعلى.',
+                        tips: 'ركزي على التحكم في الحركة وعدم الاندفاع.'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: 'اليوم 3',
+                title: 'راحة / نشاط خفيف',
+                emoji: '🧘‍♀️',
+                type: 'rest',
+                activities: [
+                    { icon: 'fa-walking', text: 'مشي 20-30 دقيقة' },
+                    { icon: 'fa-spa', text: 'إطالات خفيفة للرجلين والظهر والصدر' },
+                    { icon: 'fa-heart', text: 'يساعد عضلات المؤخرة والصدر تتعافى' }
+                ]
+            },
+            {
+                id: 4,
+                name: 'اليوم 4',
+                title: 'مؤخرة + رجلين (تركيز إحساس)',
+                emoji: '🔥',
+                type: 'workout',
+                exercises: [
+                    {
+                        id: 'ex4-1',
+                        nameAr: 'سومو سكوات بالدمبل',
+                        nameEn: 'Sumo Squat',
+                        sets: '3 × 10-15',
+                        videoId: 'UXJrBgI2RxA',
+                        description: 'قفي بوقفة واسعة وأصابع القدم للخارج، أمسكي الدمبل بين الرجلين وانزلي.',
+                        tips: 'ركزي على عصر عضلات الفخذ الداخلية والمؤخرة.'
+                    },
+                    {
+                        id: 'ex4-2',
+                        nameAr: 'سبليت سكوات',
+                        nameEn: 'Bulgarian Split Squat',
+                        sets: '3 × 10-15 لكل رجل',
+                        videoId: '2C-uNgKwPLE',
+                        description: 'اخطي خطوة كبيرة للأمام، ارفعي الرجل الخلفية على كرسي أو اتركيها على الأرض، وانزلي.',
+                        tips: 'معظم الوزن على الرجل الأمامية.'
+                    },
+                    {
+                        id: 'ex4-3',
+                        nameAr: 'جسر برجل واحدة',
+                        nameEn: 'Single-leg Glute Bridge',
+                        sets: '3 × 10-15 لكل رجل',
+                        videoId: 'AVAXhy6pl7o',
+                        description: 'استلقي على ظهرك، ارفعي رجل واحدة ونفذي الجسر بالرجل الأخرى.',
+                        tips: 'حافظي على ثبات الورك ولا تدعيه يميل.'
+                    },
+                    {
+                        id: 'ex4-4',
+                        nameAr: 'رفع الرجل للجانب',
+                        nameEn: 'Side-lying Leg Raises',
+                        sets: '3 × 10-15 لكل رجل',
+                        videoId: 'wS_rKqJi-1Y',
+                        description: 'استلقي على جنبك وارفعي الرجل العلوية للأعلى ببطء.',
+                        tips: 'لا تتأرجحي، ركزي على التحكم.'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                name: 'اليوم 5',
+                title: 'بطن + كارديو خفيف',
+                emoji: '🏃‍♀️',
+                type: 'workout',
+                exercises: [
+                    {
+                        id: 'ex5-1',
+                        nameAr: 'روشن تويست',
+                        nameEn: 'Russian Twists',
+                        sets: '3 × 15-20',
+                        videoId: 'wkD8rjkodUI',
+                        description: 'اجلسي مع ثني الركب ورفع القدمين قليلاً، أمسكي الدمبل ولفي الجذع يميناً ويساراً.',
+                        tips: 'اللف من الخصر وليس الذراعين فقط.'
+                    },
+                    {
+                        id: 'ex5-2',
+                        nameAr: 'رفع الرجلين',
+                        nameEn: 'Leg Raises',
+                        sets: '3 × 10-15',
+                        videoId: 'l4kQd9eWclE',
+                        description: 'استلقي على ظهرك وارفعي الرجلين معاً للأعلى ثم أنزليهما ببطء.',
+                        tips: 'لا ترفعي ظهرك عن الأرض.'
+                    },
+                    {
+                        id: 'ex5-3',
+                        nameAr: 'بلانك (ثبات)',
+                        nameEn: 'Plank',
+                        sets: '3 × 30-45 ثانية',
+                        videoId: 'pSHjTRCQxIw',
+                        description: 'اتخذي وضع الضغط وثبتي على الذراعين مع شد البطن.',
+                        tips: 'حافظي على خط مستقيم من الرأس للكعب.'
+                    },
+                    {
+                        id: 'ex5-4',
+                        nameAr: 'كارديو خفيف',
+                        nameEn: 'Light Cardio',
+                        sets: '10-20 دقيقة',
+                        videoId: 'ml6cT4AZdqI',
+                        description: 'مشي سريع أو نط حبل خفيف.',
+                        tips: 'حافظي على نفس متوازن.'
+                    }
+                ]
+            },
+            {
+                id: 6,
+                name: 'اليوم 6',
+                title: 'مؤخرة + رجلين (حجم/ضخ دم)',
+                emoji: '💥',
+                type: 'workout',
+                exercises: [
+                    {
+                        id: 'ex6-1',
+                        nameAr: 'سكوات مع تركيز على المؤخرة',
+                        nameEn: 'Glute-focused Squat',
+                        sets: '3-4 × 12-15',
+                        videoId: 'aclHkVaku9U',
+                        description: 'سكوات عادي مع التركيز الشديد على عصر المؤخرة عند الصعود.',
+                        tips: 'فكري في دفع الأرض بعيداً عنك.'
+                    },
+                    {
+                        id: 'ex6-2',
+                        nameAr: 'لانجز بالمشي',
+                        nameEn: 'Walking Lunges',
+                        sets: '3-4 × 12-15',
+                        videoId: 'L8fvypPrzzs',
+                        description: 'اخطي للأمام بلانج ثم أكملي بالرجل الأخرى كأنك تمشين.',
+                        tips: 'خطوات متوسطة وتحكم كامل.'
+                    },
+                    {
+                        id: 'ex6-3',
+                        nameAr: 'ركل للخلف',
+                        nameEn: 'Donkey Kicks',
+                        sets: '3-4 × 12-15 لكل رجل',
+                        videoId: 'r1yC0b-j4Js',
+                        description: 'على الأربع، اركلي رجلك للخلف وللأعلى مع عصر المؤخرة.',
+                        tips: 'يمكنك وضع الدمبل خلف الركبة لمقاومة إضافية.'
+                    },
+                    {
+                        id: 'ex6-4',
+                        nameAr: 'صعود الدرجة',
+                        nameEn: 'Step-ups',
+                        sets: '3-4 × 12-15 لكل رجل',
+                        videoId: 'KeNelgDJrWA',
+                        description: 'اصعدي على درجة أو عتبة منخفضة بقدم واحدة ثم انزلي.',
+                        tips: 'ادفعي من الكعب وليس أصابع القدم.'
+                    }
+                ]
+            },
+            {
+                id: 7,
+                name: 'اليوم 7',
+                title: 'راحة كاملة',
+                emoji: '😴',
+                type: 'rest-full',
+                activities: [
+                    { icon: 'fa-bed', text: 'نوم كافي 7-8 ساعات' },
+                    { icon: 'fa-tint', text: 'شرب ماء كثير (2-3 لتر)' },
+                    { icon: 'fa-drumstick-bite', text: 'أكل فيه بروتين (بيض، لبن، دجاج، عدس)' },
+                    { icon: 'fa-heart', text: 'عشان المؤخرة والصدر يكبروا ويتشدّوا!' }
+                ]
+            }
+        ];
+
+        // State
+        let state = {
+            currentDay: 1,
+            completedDays: {},
+            selectedExercises: {},
+            completedExercises: {}
+        };
+
+        // Load state from memory (since localStorage is not available)
+        let savedState = null;
+        try {
+            // Try to use a global variable to persist state within session
+            if (window._workoutState) {
+                savedState = window._workoutState;
+            }
+        } catch (e) {
+            console.log('State loading not available');
+        }
+
+        if (savedState) {
+            state = { ...state, ...savedState };
+        }
+
+        // Save state
+        function saveState() {
+            try {
+                window._workoutState = state;
+            } catch (e) {
+                console.log('State saving not available');
+            }
+        }
+
+        // Generate Navigation
+        function generateNav() {
+            const navTabs = document.getElementById('navTabs');
+            navTabs.innerHTML = workoutData.map(day => {
+                const statusClass = state.completedDays[day.id] ? 'completed' :
+                    (hasAnyExerciseSelected(day.id) ? 'in-progress' : '');
+                return `
+                    <button class="nav-tab ${state.currentDay === day.id ? 'active' : ''}"
+                            onclick="switchDay(${day.id})">
+                        <span class="day-status ${statusClass}"></span>
+                        ${day.emoji} ${day.name}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Check if any exercise is selected for a day
+        function hasAnyExerciseSelected(dayId) {
+            const day = workoutData.find(d => d.id === dayId);
+            if (!day || !day.exercises) return false;
+            return day.exercises.some(ex => state.selectedExercises[ex.id]);
+        }
+
+        // Switch Day
+        function switchDay(dayId) {
+            state.currentDay = dayId;
+            saveState();
+            generateNav();
+            generateDayContent();
+        }
+
+        // Generate Day Content
+        function generateDayContent() {
+            const container = document.getElementById('dayContents');
+            container.innerHTML = workoutData.map(day => {
+                const isActive = state.currentDay === day.id;
+
+                if (day.type === 'rest' || day.type === 'rest-full') {
+                    return generateRestDay(day, isActive);
+                }
+                return generateWorkoutDay(day, isActive);
+            }).join('');
+
+            updateProgress();
+            updateWeeklyTable();
+        }
+
+        // Generate Workout Day
+        function generateWorkoutDay(day, isActive) {
+            const isCompleted = state.completedDays[day.id];
+            return `
+                <div class="day-content ${isActive ? 'active' : ''}" id="day-${day.id}">
+                    <div class="day-header">
+                        <div>
+                            <h2 class="day-title">${day.emoji} ${day.name} - ${day.title}</h2>
+                            <p class="day-subtitle">${day.exercises.length} تمارين</p>
+                        </div>
+                        <button class="day-complete-btn ${isCompleted ? 'completed' : ''}"
+                                onclick="toggleDayComplete(${day.id})">
+                            <i class="fas ${isCompleted ? 'fa-check-circle' : 'fa-circle'}"></i>
+                            ${isCompleted ? 'مكتمل!' : 'إنهاء اليوم'}
+                        </button>
+                    </div>
+                    <div class="exercises-grid">
+                        ${day.exercises.map(ex => generateExerciseCard(ex, day.id)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate Exercise Card
+        function generateExerciseCard(exercise, dayId) {
+            const isSelected = state.selectedExercises[exercise.id];
+            const isDone = state.completedExercises[exercise.id];
+
+            return `
+                <div class="exercise-card ${isSelected ? 'selected' : ''} ${isDone ? 'done' : ''}"
+                     id="card-${exercise.id}">
+                    <div class="exercise-header">
+                        <div class="exercise-checkbox ${isDone ? 'checked' : ''}"
+                             onclick="toggleExerciseDone('${exercise.id}')">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-name">${exercise.nameAr}</h3>
+                            <span class="exercise-name-en">${exercise.nameEn}</span>
+                        </div>
+                        <span class="exercise-sets">${exercise.sets}</span>
+                    </div>
+                    <div class="exercise-body">
+                        <div class="exercise-video" id="video-${exercise.id}">
+                            <iframe
+                                src="https://www.youtube.com/embed/${exercise.videoId}?rel=0"
+                                title="${exercise.nameEn}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="exercise-description">${exercise.description}</p>
+                        <div class="exercise-tips">
+                            <div class="exercise-tips-title">
+                                <i class="fas fa-star"></i>
+                                نصيحة
+                            </div>
+                            <p>${exercise.tips}</p>
+                        </div>
+                        <button class="refresh-btn" onclick="refreshVideo('${exercise.id}', '${exercise.videoId}')">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث الفيديو
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate Rest Day
+        function generateRestDay(day, isActive) {
+            const isCompleted = state.completedDays[day.id];
+            const iconClass = day.type === 'rest-full' ? '😴' : '🧘‍♀️';
+
+            return `
+                <div class="day-content ${isActive ? 'active' : ''}" id="day-${day.id}">
+                    <div class="day-header">
+                        <div>
+                            <h2 class="day-title">${day.emoji} ${day.name} - ${day.title}</h2>
+                            <p class="day-subtitle">يوم للتعافي والراحة</p>
+                        </div>
+                        <button class="day-complete-btn ${isCompleted ? 'completed' : ''}"
+                                onclick="toggleDayComplete(${day.id})">
+                            <i class="fas ${isCompleted ? 'fa-check-circle' : 'fa-circle'}"></i>
+                            ${isCompleted ? 'مكتمل!' : 'إنهاء اليوم'}
+                        </button>
+                    </div>
+                    <div class="rest-day-card">
+                        <div class="rest-day-icon">${iconClass}</div>
+                        <h3 class="rest-day-title">${day.title}</h3>
+                        <div class="rest-day-tips">
+                            ${day.activities.map(act => `
+                                <div class="rest-tip">
+                                    <i class="fas ${act.icon}"></i>
+                                    <span>${act.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle Exercise Done
+        function toggleExerciseDone(exerciseId) {
+            state.completedExercises[exerciseId] = !state.completedExercises[exerciseId];
+            saveState();
+
+            const card = document.getElementById(`card-${exerciseId}`);
+            const checkbox = card.querySelector('.exercise-checkbox');
+
+            if (state.completedExercises[exerciseId]) {
+                card.classList.add('done');
+                checkbox.classList.add('checked');
+            } else {
+                card.classList.remove('done');
+                checkbox.classList.remove('checked');
+            }
+
+            updateProgress();
+            generateNav();
+        }
+
+        // Toggle Day Complete
+        function toggleDayComplete(dayId) {
+            state.completedDays[dayId] = !state.completedDays[dayId];
+
+            // If completing a day, mark all its exercises as done
+            const day = workoutData.find(d => d.id === dayId);
+            if (day && day.exercises && state.completedDays[dayId]) {
+                day.exercises.forEach(ex => {
+                    state.completedExercises[ex.id] = true;
+                });
+            }
+
+            saveState();
+            generateDayContent();
+            generateNav();
+            updateWeeklyTable();
+
+            if (state.completedDays[dayId]) {
+                showCelebration();
+            }
+        }
+
+        // Refresh Video
+        function refreshVideo(exerciseId, videoId) {
+            const container = document.getElementById(`video-${exerciseId}`);
+            const timestamp = Date.now();
+            container.innerHTML = `
+                <iframe
+                    src="https://www.youtube.com/embed/${videoId}?rel=0&t=${timestamp}"
+                    title="Exercise Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const totalDays = 7;
+            const completedDaysCount = Object.values(state.completedDays).filter(Boolean).length;
+
+            let totalExercises = 0;
+            let completedExercisesCount = 0;
+
+            workoutData.forEach(day => {
+                if (day.exercises) {
+                    totalExercises += day.exercises.length;
+                    day.exercises.forEach(ex => {
+                        if (state.completedExercises[ex.id]) {
+                            completedExercisesCount++;
+                        }
+                    });
+                }
+            });
+
+            const progress = totalDays > 0 ? Math.round((completedDaysCount / totalDays) * 100) : 0;
+
+            document.getElementById('completedDays').textContent = completedDaysCount;
+            document.getElementById('completedExercises').textContent = completedExercisesCount;
+            document.getElementById('weekProgress').textContent = progress + '%';
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Update Weekly Table
+        function updateWeeklyTable() {
+            const tbody = document.getElementById('weeklyTableBody');
+            tbody.innerHTML = workoutData.map(day => {
+                const isCompleted = state.completedDays[day.id];
+                const hasProgress = day.exercises ?
+                    day.exercises.some(ex => state.completedExercises[ex.id]) : false;
+
+                let statusClass = 'not-started';
+                let statusText = 'لم يبدأ';
+                let statusIcon = 'fa-clock';
+
+                if (isCompleted) {
+                    statusClass = 'completed';
+                    statusText = 'مكتمل';
+                    statusIcon = 'fa-check-circle';
+                } else if (hasProgress) {
+                    statusClass = 'pending';
+                    statusText = 'جاري';
+                    statusIcon = 'fa-spinner';
+                }
+
+                const exerciseCount = day.exercises ? day.exercises.length :
+                    (day.type === 'rest' ? 'نشاط خفيف' : 'راحة');
+
+                return `
+                    <tr>
+                        <td><strong>${day.emoji} ${day.name}</strong></td>
+                        <td>${day.title}</td>
+                        <td>${typeof exerciseCount === 'number' ? exerciseCount + ' تمارين' : exerciseCount}</td>
+                        <td>
+                            <span class="table-status ${statusClass}">
+                                <i class="fas ${statusIcon}"></i>
+                                ${statusText}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Show Celebration
+        function showCelebration() {
+            const confetti = document.getElementById('confetti');
+            const colors = ['#ec4899', '#f472b6', '#db2777', '#be185d', '#fce7f3'];
+
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.appendChild(piece);
+            }
+
+            setTimeout(() => {
+                confetti.innerHTML = '';
+            }, 4000);
+
+            showModal('🎉', 'أحسنت!', 'لقد أكملتِ تمارين هذا اليوم بنجاح!', [
+                { text: 'رائع!', class: 'confirm', action: () => hideModal() }
+            ]);
+        }
+
+        // Modal Functions
+        function showModal(icon, title, text, buttons) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('modalButtons').innerHTML = buttons.map(btn =>
+                `<button class="modal-btn ${btn.class}" onclick="${btn.action.toString()}()">${btn.text}</button>`
+            ).join('');
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function showResetModal() {
+            showModal('⚠️', 'إعادة تعيين التقدم', 'هل أنتِ متأكدة من إعادة تعيين كل التقدم؟', [
+                { text: 'نعم، إعادة تعيين', class: 'confirm', action: () => { resetProgress(); hideModal(); } },
+                { text: 'إلغاء', class: 'cancel', action: () => hideModal() }
+            ]);
+        }
+
+        function resetProgress() {
+            state = {
+                currentDay: 1,
+                completedDays: {},
+                selectedExercises: {},
+                completedExercises: {}
+            };
+            saveState();
+            generateNav();
+            generateDayContent();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            generateNav();
+            generateDayContent();
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
